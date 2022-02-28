@@ -35,8 +35,6 @@
 #include <silkrpc/types/call.hpp>
 #include <silkrpc/types/transaction.hpp>
 
-// #include <silkrpc/ethdb/transaction_database.hpp>
-
 namespace silkrpc::trace {
 
 struct TraceConfig {
@@ -48,7 +46,6 @@ struct TraceConfig {
 void from_json(const nlohmann::json& json, TraceConfig& tc);
 std::ostream& operator<<(std::ostream& out, const TraceConfig& tc);
 
-// using Storage = std::map<evmc::bytes32, evmc::bytes32>;
 using Storage = std::map<std::string, std::string>;
 
 struct TraceLog {
@@ -76,16 +73,6 @@ public:
     void on_execution_end(const evmc_result& result, const silkworm::IntraBlockState& intra_block_state) noexcept override;
 
 private:
-    // struct Context {
-    //     const uint8_t* const code;  /// Reference to the code being executed.
-    //     const int64_t start_gas;
-
-    //     std::optional<nlohmann::json> previous_log_;
-
-    //     Context(const uint8_t* c, int64_t g) noexcept : code{c}, start_gas{g} {}
-    // };
-
-    // nlohmann::json& logs_;
     std::vector<TraceLog>& logs_;
     const TraceConfig& config_;
     std::map<evmc::address, Storage> storage_;
